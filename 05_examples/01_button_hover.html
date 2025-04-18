@@ -3,37 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GSAPボタンホバーエフェクト</title>
+    <title>GSAPボタンホバーエフェクト例</title>
     <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="../common.js" defer></script>
     <style>
+      /* ページ固有のスタイル */
+      .button-demo {
+        margin: 2.5rem 0;
+      }
+
       .button-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
-        margin: 30px 0;
+        gap: 25px;
+        justify-content: center;
+        margin: 2rem 0 3rem;
       }
 
-      .demo-button {
-        padding: 12px 25px;
+      .example-button {
+        padding: 15px 30px;
         font-size: 16px;
         background-color: #3498db;
         color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
         transition: background-color 0.3s;
       }
 
-      .demo-button:hover {
-        background-color: #2980b9;
+      .example-explanation {
+        margin: 1.5rem 0;
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 5px;
+        border-left: 3px solid #3498db;
+      }
+
+      .code-title {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
       }
     </style>
   </head>
+
   <body>
     <header>
-      <h1>ボタンホバーエフェクト</h1>
-      <p>GSAPを使ったボタンのホバーアニメーション</p>
+      <h1>GSAPボタンホバーエフェクト</h1>
     </header>
 
     <nav>
@@ -43,182 +62,226 @@
         <li><a href="../02_benefits/02_benefits.html">メリット</a></li>
         <li><a href="../03_good_animation/03_good_animation.html">良いアニメーション</a></li>
         <li><a href="../04_basic_syntax/04_basic_syntax.html">基本構文と例</a></li>
-        <li><a href="../05_examples/01_button_hover.html">ボタンホバー</a></li>
-        <li><a href="../05_examples/02_timeline_sequence.html">タイムライン</a></li>
-        <li><a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
-        <li><a href="../05_examples/04_scroll_progress.html">スクロール連動</a></li>
-        <li><a href="../05_examples/05_stagger_animation.html">スタッガー</a></li>
+        <li class="dropdown">
+          <a href="#">コードサンプル</a>
+          <div class="dropdown-content">
+            <a href="../05_examples/01_button_hover.html" class="active">ボタンホバー</a>
+            <a href="../05_examples/02_timeline_sequence.html">タイムライン</a>
+            <a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a>
+            <a href="../05_examples/04_scroll_progress.html">スクロール連動</a>
+            <a href="../05_examples/05_stagger_animation.html">スタッガー</a>
+          </div>
+        </li>
       </ul>
     </nav>
 
-    <div class="content">
+    <section class="container">
       <div class="introduction">
-        <h2>GSAPを使ったボタンホバーエフェクト</h2>
-        <p>ユーザーがボタンにカーソルを合わせたときにアニメーションを実行することで、インタラクティブ性を高めることができます。このページでは、GSAPを使ったボタンホバーエフェクトのサンプルを紹介します。</p>
+        <h2>GSAPでボタンホバーを実装する</h2>
+        <p> CSSのtransitionだけでは実現できない複雑なホバーエフェクトをGSAPを使って簡単に実装できます。 このページでは、3つのボタンホバーエフェクトの例を紹介します。 </p>
       </div>
 
-      <h2>基本的なホバーエフェクト</h2>
-      <p>マウスを乗せると拡大し、マウスを外すと元のサイズに戻るシンプルなエフェクトです。</p>
-      <div class="button-container">
-        <button class="demo-button hover-scale">ホバーで拡大</button>
-      </div>
+      <!-- 基本的なホバーエフェクト -->
+      <div class="section">
+        <h3>1. 基本的なスケールエフェクト</h3>
+        <p>マウスオーバー時に少し拡大するシンプルなエフェクトです。</p>
 
-      <div class="code-block">
-        <pre><code class="language-javascript">// 基本的なホバーエフェクト
-const scaleButton = document.querySelector(".hover-scale");
+        <div class="button-demo">
+          <div class="button-container">
+            <button id="basic-button" class="example-button">ホバーしてみて</button>
+          </div>
 
-// マウスが乗ったとき
-scaleButton.addEventListener("mouseenter", () => {
-  gsap.to(scaleButton, {
-    scale: 1.1,
-    duration: 0.3
+          <div class="example-explanation">
+            <p class="code-title">実装コード:</p>
+            <div class="code-block">
+              <pre><code class="language-javascript">// ボタン要素の取得
+const button = document.getElementById("basic-button");
+
+// マウスが入ったときのアニメーション
+button.addEventListener("mouseenter", () => {
+  gsap.to(button, {
+    scale: 1.1,  // 10%拡大
+    duration: 0.3,
+    ease: "power1.out"
   });
 });
 
-// マウスが外れたとき
-scaleButton.addEventListener("mouseleave", () => {
-  gsap.to(scaleButton, {
-    scale: 1,
-    duration: 0.3
+// マウスが出たときのアニメーション
+button.addEventListener("mouseleave", () => {
+  gsap.to(button, {
+    scale: 1,  // 元のサイズに戻る
+    duration: 0.3,
+    ease: "power1.in"
   });
 });</code></pre>
+              <button class="copy-button">コピー</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h2>バウンスエフェクト</h2>
-      <p>マウスを乗せるとバウンドするアニメーションを追加したボタンです。イージング関数を使って跳ねるような動きを表現しています。</p>
-      <div class="button-container">
-        <button class="demo-button hover-bounce">ホバーでバウンス</button>
-      </div>
+      <!-- バウンスエフェクト -->
+      <div class="section">
+        <h3>2. バウンスエフェクト</h3>
+        <p>マウスオーバー時にバウンスするエフェクトです。弾むような動きが特徴です。</p>
 
-      <div class="code-block">
-        <pre><code class="language-javascript">// バウンスエフェクト
-const bounceButton = document.querySelector(".hover-bounce");
+        <div class="button-demo">
+          <div class="button-container">
+            <button id="bounce-button" class="example-button">ボヨンと弾む</button>
+          </div>
 
-// マウスが乗ったとき
+          <div class="example-explanation">
+            <p class="code-title">実装コード:</p>
+            <div class="code-block">
+              <pre><code class="language-javascript">// ボタン要素の取得
+const bounceButton = document.getElementById("bounce-button");
+
+// マウスが入ったときのアニメーション
 bounceButton.addEventListener("mouseenter", () => {
   gsap.to(bounceButton, {
-    scale: 1.1,
-    y: -10,
+    scale: 1.15,  // 15%拡大
     duration: 0.4,
-    ease: "back.out(1.7)" // バウンスするイージング
+    ease: "elastic.out(1, 0.3)"  // 弾むようなイージング
   });
 });
 
-// マウスが外れたとき
+// マウスが出たときのアニメーション
 bounceButton.addEventListener("mouseleave", () => {
   gsap.to(bounceButton, {
-    scale: 1,
-    y: 0,
+    scale: 1,  // 元のサイズに戻る
+    duration: 0.2,
+    ease: "power1.in"
+  });
+});</code></pre>
+              <button class="copy-button">コピー</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 複合エフェクト -->
+      <div class="section">
+        <h3>3. 複合エフェクト</h3>
+        <p>回転と色の変化を組み合わせた複雑なエフェクトです。複数のプロパティを同時にアニメーションできます。</p>
+
+        <div class="button-demo">
+          <div class="button-container">
+            <button id="complex-button" class="example-button">複合エフェクト</button>
+          </div>
+
+          <div class="example-explanation">
+            <p class="code-title">実装コード:</p>
+            <div class="code-block">
+              <pre><code class="language-javascript">// ボタン要素の取得
+const complexButton = document.getElementById("complex-button");
+
+// マウスが入ったときのアニメーション
+complexButton.addEventListener("mouseenter", () => {
+  gsap.to(complexButton, {
+    scale: 1.05,          // 少し拡大
+    rotation: 5,          // 少し回転
+    backgroundColor: "#e74c3c",  // 色を変更
+    boxShadow: "0 5px 15px rgba(0,0,0,0.2)",  // 影を付ける
+    duration: 0.3,
+    ease: "back.out(1.7)"  // 少し行き過ぎてから戻るイージング
+  });
+});
+
+// マウスが出たときのアニメーション
+complexButton.addEventListener("mouseleave", () => {
+  gsap.to(complexButton, {
+    scale: 1,             // 元のサイズに戻る
+    rotation: 0,          // 回転をリセット
+    backgroundColor: "#3498db",  // 元の色に戻す
+    boxShadow: "none",    // 影を消す
     duration: 0.3,
     ease: "power2.out"
   });
 });</code></pre>
+              <button class="copy-button">コピー</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h2>複合エフェクト</h2>
-      <p>回転と色の変化を組み合わせたエフェクトです。複数のプロパティを同時にアニメーションさせることができます。</p>
-      <div class="button-container">
-        <button class="demo-button hover-complex">ホバーで複合効果</button>
+      <div class="section">
+        <h3>まとめ</h3>
+        <p> GSAPを使うことで、CSSだけでは実現が難しい複雑なアニメーションも簡単に作成できます。 さまざまなイージング関数や複数プロパティの同時アニメーションを活用して、 ユーザー体験を向上させるインタラクションを実装しましょう。 </p>
+        <p> これらのサンプルを参考に、独自のホバーエフェクトを作成してみてください。 </p>
       </div>
 
-      <div class="code-block">
-        <pre><code class="language-javascript">// 複合エフェクト
-const complexButton = document.querySelector(".hover-complex");
-
-// マウスが乗ったとき
-complexButton.addEventListener("mouseenter", () => {
-  gsap.to(complexButton, {
-    backgroundColor: "#e74c3c",
-    rotation: 5,
-    scale: 1.05,
-    duration: 0.3
-  });
-});
-
-// マウスが外れたとき
-complexButton.addEventListener("mouseleave", () => {
-  gsap.to(complexButton, {
-    backgroundColor: "#3498db",
-    rotation: 0,
-    scale: 1,
-    duration: 0.3
-  });
-});</code></pre>
+      <div class="next-step">
+        <h2>次のステップ</h2>
+        <p>GSAPのタイムラインシーケンスについて学びましょう：<a href="02_timeline_sequence.html">タイムラインシーケンス</a></p>
       </div>
-
-      <div class="introduction">
-        <h2>まとめ</h2>
-        <p>GSAPを使うことで、CSSだけでは難しい複雑なアニメーションを簡単に実装できます。特にイージング関数を活用することで、より自然で洗練された動きを実現できます。</p>
-        <p>上記のサンプルを組み合わせたり、他のプロパティを追加したりして、オリジナルのホバーエフェクトを作ってみましょう。</p>
-      </div>
-    </div>
+    </section>
 
     <footer>
-      <p>GSAP勉強会サンプル - ボタンホバーエフェクトデモ</p>
+      <p>GSAPで作る魅力的なアニメーション勉強会</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
-    <script src="../common.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // 基本的なホバーエフェクト
-        const scaleButton = document.querySelector(".hover-scale");
+        // 1. 基本的なスケールエフェクト
+        const button = document.getElementById("basic-button");
 
-        scaleButton.addEventListener("mouseenter", () => {
-          gsap.to(scaleButton, {
+        button.addEventListener("mouseenter", () => {
+          gsap.to(button, {
             scale: 1.1,
             duration: 0.3,
+            ease: "power1.out",
           });
         });
 
-        scaleButton.addEventListener("mouseleave", () => {
-          gsap.to(scaleButton, {
+        button.addEventListener("mouseleave", () => {
+          gsap.to(button, {
             scale: 1,
             duration: 0.3,
+            ease: "power1.in",
           });
         });
 
-        // バウンスエフェクト
-        const bounceButton = document.querySelector(".hover-bounce");
+        // 2. バウンスエフェクト
+        const bounceButton = document.getElementById("bounce-button");
 
         bounceButton.addEventListener("mouseenter", () => {
           gsap.to(bounceButton, {
-            scale: 1.1,
-            y: -10,
+            scale: 1.15,
             duration: 0.4,
-            ease: "back.out(1.7)", // バウンスするイージング
+            ease: "elastic.out(1, 0.3)",
           });
         });
 
         bounceButton.addEventListener("mouseleave", () => {
           gsap.to(bounceButton, {
             scale: 1,
-            y: 0,
-            duration: 0.3,
-            ease: "power2.out",
+            duration: 0.2,
+            ease: "power1.in",
           });
         });
 
-        // 複合エフェクト
-        const complexButton = document.querySelector(".hover-complex");
+        // 3. 複合エフェクト
+        const complexButton = document.getElementById("complex-button");
 
         complexButton.addEventListener("mouseenter", () => {
           gsap.to(complexButton, {
-            backgroundColor: "#e74c3c",
-            rotation: 5,
             scale: 1.05,
+            rotation: 5,
+            backgroundColor: "#e74c3c",
+            boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
             duration: 0.3,
+            ease: "back.out(1.7)",
           });
         });
 
         complexButton.addEventListener("mouseleave", () => {
           gsap.to(complexButton, {
-            backgroundColor: "#3498db",
-            rotation: 0,
             scale: 1,
+            rotation: 0,
+            backgroundColor: "#3498db",
+            boxShadow: "none",
             duration: 0.3,
+            ease: "power2.out",
           });
         });
       });

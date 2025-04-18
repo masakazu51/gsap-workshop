@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GSAP 勉強会資料</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="common.js" defer></script>
   </head>
   <body>
     <header>
@@ -14,24 +15,32 @@
 
     <nav>
       <ul>
-        <li><a href="index.html">ホーム</a></li>
+        <li><a href="index.html" class="active">ホーム</a></li>
         <li><a href="01_introduction/01_introduction.html">概要</a></li>
         <li><a href="02_benefits/02_benefits.html">メリット</a></li>
         <li><a href="03_good_animation/03_good_animation.html">良いアニメーション</a></li>
         <li><a href="04_basic_syntax/04_basic_syntax.html">基本構文と例</a></li>
-        <li><a href="05_examples/01_button_hover.html">ボタンホバー</a></li>
-        <li><a href="05_examples/02_timeline_sequence.html">タイムライン</a></li>
-        <li><a href="05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
-        <li><a href="05_examples/04_scroll_progress.html">スクロール連動</a></li>
-        <li><a href="05_examples/05_stagger_animation.html">スタッガー</a></li>
+        <li class="dropdown">
+          <a href="#">コードサンプル</a>
+          <div class="dropdown-content">
+            <a href="05_examples/01_button_hover.html">ボタンホバー</a>
+            <a href="05_examples/02_timeline_sequence.html">タイムライン</a>
+            <a href="05_examples/03_scroll_fade_in.html">スクロールフェード</a>
+            <a href="05_examples/04_scroll_progress.html">スクロール連動</a>
+            <a href="05_examples/05_stagger_animation.html">スタッガー</a>
+          </div>
+        </li>
       </ul>
     </nav>
 
-    <div class="container">
-      <p>このリポジトリは、GSAP（GreenSock Animation Platform）の勉強会で使用する資料集です。</p>
+    <section class="container">
+      <div class="introduction">
+        <h2>GSAPアニメーション学習リソース</h2>
+        <p>このリポジトリは、GSAP（GreenSock Animation Platform）の勉強会で使用する資料集です。Webアニメーションの基本から実践的な実装例まで、段階的に学ぶことができます。</p>
+      </div>
 
-      <div class="list-section">
-        <h2>勉強会の概要</h2>
+      <div class="section">
+        <h3>勉強会の概要</h3>
         <ul>
           <li><strong>対象</strong>: Web アニメーションの初学者</li>
           <li><strong>目的</strong>: GSAP の基本を理解し、実際にアニメーションを実装できるようになる</li>
@@ -39,8 +48,8 @@
         </ul>
       </div>
 
-      <div class="list-section">
-        <h2>資料の構成</h2>
+      <div class="section">
+        <h3>資料の構成</h3>
         <ol>
           <li><a href="01_introduction/01_introduction.html">GSAP の概要</a> - GSAP とは何か、何ができるのか</li>
           <li><a href="02_benefits/02_benefits.html">GSAP のメリット</a> - 他のアニメーションライブラリとの比較</li>
@@ -59,8 +68,8 @@
         </ol>
       </div>
 
-      <div class="list-section">
-        <h2>基本的なGSAPコード例</h2>
+      <div class="section">
+        <h3>基本的なGSAPコード例</h3>
         <div class="code-block">
           <pre><code class="language-javascript">// 基本的なアニメーション
 gsap.to(".element", {
@@ -89,16 +98,17 @@ gsap.from(".fade-in", {
   opacity: 0,
   y: 50
 });</code></pre>
+          <button class="copy-button">コピー</button>
         </div>
       </div>
 
-      <div class="list-section">
-        <h2>勉強会の進め方</h2>
+      <div class="section">
+        <h3>勉強会の進め方</h3>
         <p>各セクションを順番に進み、実際にコードを書きながら理解を深めていきます。セクション 5 の実演では、実際にブラウザで動作するサンプルを一緒に見ながら学びます。</p>
       </div>
 
-      <div class="list-section">
-        <h2>準備</h2>
+      <div class="section">
+        <h3>準備</h3>
         <p>勉強会に参加する前に、以下のものを準備しておいてください：</p>
         <ol>
           <li>最新のブラウザ（Chrome, Firefox, Safari など）</li>
@@ -107,27 +117,26 @@ gsap.from(".fade-in", {
         </ol>
       </div>
 
-      <div class="resources-section">
-        <h2>参考リソース</h2>
+      <div class="section">
+        <h3>参考リソース</h3>
         <ul>
-          <li><a href="https://greensock.com/docs/" target="_blank">GSAP 公式ドキュメント</a></li>
-          <li><a href="https://greensock.com/get-started/" target="_blank">GSAP 公式チュートリアル</a></li>
-          <li><a href="https://greensock.com/showcase/" target="_blank">GSAP デモ集</a></li>
+          <li><a href="https://greensock.com/docs/" target="_blank" rel="noopener">GSAP 公式ドキュメント</a></li>
+          <li><a href="https://greensock.com/get-started/" target="_blank" rel="noopener">GSAP 公式チュートリアル</a></li>
+          <li><a href="https://greensock.com/showcase/" target="_blank" rel="noopener">GSAP デモ集</a></li>
         </ul>
       </div>
 
-      <div class="list-section">
-        <h2>ライセンス</h2>
-        <p>本資料は勉強会の参加者が自由に使用できます。GSAP の使用にあたっては、<a href="https://greensock.com/standard-license/" target="_blank">GreenSock 社のライセンス</a>に従ってください。</p>
+      <div class="section">
+        <h3>ライセンス</h3>
+        <p>本資料は勉強会の参加者が自由に使用できます。GSAP の使用にあたっては、<a href="https://greensock.com/standard-license/" target="_blank" rel="noopener">GreenSock 社のライセンス</a>に従ってください。</p>
       </div>
 
-      <hr />
-      <p>制作: GSAP 勉強会チーム</p>
-    </div>
+      <hr class="divider" />
+      <p class="footer-text">制作: GSAP 勉強会チーム</p>
+    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
-    <script src="common.js" defer></script>
+    <footer>
+      <p>GSAPで作る魅力的なアニメーション勉強会</p>
+    </footer>
   </body>
 </html>

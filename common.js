@@ -30,8 +30,25 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("nav a").forEach((link) => {
     if (link.getAttribute("href").includes(currentPage)) {
       link.classList.add("active");
+
+      // ドロップダウンメニュー内のアクティブなリンクの親メニューをアクティブにする
+      const parentLi = link.closest(".dropdown");
+      if (parentLi) {
+        const parentLink = parentLi.querySelector("a");
+        if (parentLink) {
+          parentLink.classList.add("active");
+        }
+      }
     }
   });
+
+  // 05_examplesディレクトリのページでは、コードサンプルを親メニューをアクティブにする
+  if (window.location.pathname.includes("05_examples")) {
+    const dropdownLink = document.querySelector(".dropdown > a");
+    if (dropdownLink && !dropdownLink.classList.contains("active")) {
+      dropdownLink.classList.add("active");
+    }
+  }
 
   // Prism.jsの再ハイライト処理（動的に追加されたコードブロックに対応）
   if (typeof Prism !== "undefined") {

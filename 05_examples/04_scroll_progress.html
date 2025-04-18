@@ -33,31 +33,6 @@
         z-index: 10;
       }
 
-      .scroll-arrow {
-        display: block;
-        text-align: center;
-        margin: 20px 0;
-        color: #3498db;
-        font-size: 24px;
-        animation: bounce 2s infinite;
-      }
-
-      @keyframes bounce {
-        0%,
-        20%,
-        50%,
-        80%,
-        100% {
-          transform: translateY(0);
-        }
-        40% {
-          transform: translateY(-20px);
-        }
-        60% {
-          transform: translateY(-10px);
-        }
-      }
-
       pre {
         margin: 0;
         padding: 0;
@@ -93,7 +68,6 @@
 
     <header>
       <h1>スクロール連動アニメーション</h1>
-      <p>GSAPのScrollTriggerを使ったスクラブ効果</p>
     </header>
 
     <nav>
@@ -103,20 +77,24 @@
         <li><a href="../02_benefits/02_benefits.html">メリット</a></li>
         <li><a href="../03_good_animation/03_good_animation.html">良いアニメーション</a></li>
         <li><a href="../04_basic_syntax/04_basic_syntax.html">基本構文と例</a></li>
-        <li><a href="../05_examples/01_button_hover.html">ボタンホバー</a></li>
-        <li><a href="../05_examples/02_timeline_sequence.html">タイムライン</a></li>
-        <li><a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
-        <li><a href="../05_examples/04_scroll_progress.html">スクロール連動</a></li>
-        <li><a href="../05_examples/05_stagger_animation.html">スタッガー</a></li>
+        <li class="dropdown">
+          <a href="#">コードサンプル</a>
+          <div class="dropdown-content">
+            <a href="../05_examples/01_button_hover.html">ボタンホバー</a>
+            <a href="../05_examples/02_timeline_sequence.html">タイムライン</a>
+            <a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a>
+            <a href="../05_examples/04_scroll_progress.html" class="active">スクロール連動</a>
+            <a href="../05_examples/05_stagger_animation.html">スタッガー</a>
+          </div>
+        </li>
       </ul>
     </nav>
 
-    <div class="content">
+    <div class="container">
       <div class="introduction">
         <h2>ScrollTriggerのscrub機能</h2>
         <p>ScrollTriggerの<strong>scrub</strong>パラメータを使うと、スクロール量にアニメーションの進行度を連動させることができます。通常のアニメーションと異なり、ユーザーのスクロール速度や方向に従ってアニメーションが進行します。</p>
         <p>下記の3つのデモでは、それぞれ異なるスクロール連動効果を実装しています。ゆっくりスクロールしながら、各セクションの動きを観察してください。逆方向にスクロールすると、アニメーションも逆に動きます。</p>
-        <div class="scroll-arrow">↓</div>
       </div>
 
       <!-- パララックス効果のデモ -->
@@ -150,7 +128,6 @@
         </div>
         <p>このコードでは、<span class="inline-code">scrub: true</span>を設定することで、スクロール量にアニメーションの進行度を連動させています。ユーザーがスクロールを進めるとアニメーションも進み、戻すとアニメーションも戻ります。</p>
         <p><strong>試してみよう：</strong>ゆっくりスクロールしたり、すばやくスクロールしたりして、青い四角形の動きの違いを観察してください。</p>
-        <div class="scroll-arrow">↓</div>
       </div>
 
       <!-- 水平スクロールのデモ -->
@@ -185,14 +162,12 @@
         </div>
         <p>このコードでは、<span class="inline-code">scrub: 1</span>と数値を指定することで、スクロールとアニメーションの間に1秒の遅延を持たせています。また、<span class="inline-code">pin: true</span>でセクションを画面に固定し、縦スクロールを水平方向の動きに変換しています。</p>
         <p><strong>試してみよう：</strong>このセクションをゆっくりスクロールして、パネルが順番に表示される様子を確認してください。スクロールを戻すと、パネルも逆方向に動きます。</p>
-        <div class="scroll-arrow">↓</div>
       </div>
 
       <!-- 要素の変形デモ -->
       <h2>3. 要素の変形アニメーション</h2>
       <p>このデモでは、スクロールに応じて円が大きく変形し、色も変化します。複数のアニメーションステップがスクロール位置に連動します。</p>
       <div class="pinned-section" id="transform-section">
-        <div class="demo-label">変形アニメーションデモ</div>
         <div class="pinned-content">
           <div class="circle" id="animated-circle"></div>
           <h3>スクロールでゆっくり変形します</h3>
@@ -289,6 +264,12 @@ gsap.timeline({
           <li><strong>timelineとの組み合わせ</strong>: 複数のアニメーションをスクロールに連動させることができます</li>
         </ol>
         <p>ScrollTriggerのスクラブ機能は、インタラクティブなWebサイトやデジタルストーリーテリングに非常に効果的です。ユーザーのスクロールに合わせて物語を展開したり、情報を段階的に表示したりすることができます。</p>
+      </div>
+
+      <div class="next-step">
+        <h2>次のステップ</h2>
+        <p>次は、複数の要素を順番にアニメーションさせる「スタッガーアニメーション」について学びましょう。</p>
+        <p><a href="05_stagger_animation.html" class="button">スタッガーアニメーションへ進む</a></p>
       </div>
     </div>
 

@@ -3,75 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GSAPタイムラインシーケンス</title>
+    <title>GSAPタイムラインシーケンス例</title>
     <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="../common.js" defer></script>
     <style>
-      .demo-container {
-        position: relative;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        margin: 30px 0;
+      /* ページ固有スタイル */
+      .timeline-demo {
+        margin: 2.5rem 0;
       }
 
       .animation-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
+        position: relative;
+        width: 100%;
+        height: 300px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        padding: 20px;
+        overflow: hidden;
       }
 
-      .box {
-        width: 100px;
-        height: 100px;
-        margin: 0 10px;
-        background-color: #3498db;
+      .timeline-box {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         color: white;
         font-weight: bold;
+        font-size: 1.2rem;
       }
 
+      /* ボックスの色指定 */
       .box1 {
         background-color: #3498db;
+        left: 50px;
+        top: 40px;
       }
+
       .box2 {
         background-color: #2ecc71;
+        left: 150px;
+        top: 40px;
       }
+
       .box3 {
         background-color: #e74c3c;
+        left: 250px;
+        top: 40px;
       }
+
       .box4 {
         background-color: #f39c12;
+        left: 350px;
+        top: 40px;
       }
 
       .controls {
         display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 12px;
+        margin: 1.5rem 0;
+        flex-wrap: wrap;
       }
 
-      .control-btn {
-        padding: 8px 15px;
-        background-color: #34495e;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
+      .demo-explanation {
+        margin: 1.5rem 0;
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 5px;
+        border-left: 3px solid #3498db;
       }
 
-      .control-btn:hover {
-        background-color: #2c3e50;
+      .code-title {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
       }
     </style>
   </head>
+
   <body>
     <header>
-      <h1>タイムラインシーケンス</h1>
-      <p>GSAPのタイムラインを使った連続アニメーション</p>
+      <h1>GSAPタイムラインシーケンス</h1>
     </header>
 
     <nav>
@@ -81,164 +98,191 @@
         <li><a href="../02_benefits/02_benefits.html">メリット</a></li>
         <li><a href="../03_good_animation/03_good_animation.html">良いアニメーション</a></li>
         <li><a href="../04_basic_syntax/04_basic_syntax.html">基本構文と例</a></li>
-        <li><a href="../05_examples/01_button_hover.html">ボタンホバー</a></li>
-        <li><a href="../05_examples/02_timeline_sequence.html">タイムライン</a></li>
-        <li><a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
-        <li><a href="../05_examples/04_scroll_progress.html">スクロール連動</a></li>
-        <li><a href="../05_examples/05_stagger_animation.html">スタッガー</a></li>
+        <li class="dropdown">
+          <a href="#">コードサンプル</a>
+          <div class="dropdown-content">
+            <a href="../05_examples/01_button_hover.html">ボタンホバー</a>
+            <a href="../05_examples/02_timeline_sequence.html" class="active">タイムライン</a>
+            <a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a>
+            <a href="../05_examples/04_scroll_progress.html">スクロール連動</a>
+            <a href="../05_examples/05_stagger_animation.html">スタッガー</a>
+          </div>
+        </li>
       </ul>
     </nav>
 
-    <div class="content">
+    <section class="container">
       <div class="introduction">
-        <h2>GSAPタイムラインについて</h2>
-        <p>タイムラインを使うと、複数のアニメーションを連続して実行したり、重ねたりすることができます。このデモでは、4つのボックスを順番にアニメーションさせるタイムラインを実装しています。</p>
+        <h2>GSAPのタイムラインでアニメーションを制御する</h2>
+        <p> GSAPのタイムラインを使用すると、複数のアニメーションをシーケンスで実行したり、時間的に正確に制御したりすることができます。 このページでは、タイムラインの基本的な使い方と、再生・一時停止・逆再生などの制御方法を紹介します。 </p>
       </div>
 
-      <div class="demo-container">
-        <div class="animation-container">
-          <div class="box box1">Box 1</div>
-          <div class="box box2">Box 2</div>
-          <div class="box box3">Box 3</div>
-          <div class="box box4">Box 4</div>
+      <div class="section">
+        <h3>タイムラインの基本</h3>
+        <p> タイムラインを使うと、複数の要素のアニメーションをタイミングを合わせて連続的に実行できます。 下記のデモでは、4つのボックスが順番に登場するアニメーションをタイムラインで制御しています。 </p>
+
+        <div class="timeline-demo">
+          <div class="animation-container">
+            <div class="timeline-box box1">1</div>
+            <div class="timeline-box box2">2</div>
+            <div class="timeline-box box3">3</div>
+            <div class="timeline-box box4">4</div>
+          </div>
+
+          <div class="controls">
+            <button id="play-btn">再生</button>
+            <button id="pause-btn">一時停止</button>
+            <button id="resume-btn">再開</button>
+            <button id="reverse-btn">逆再生</button>
+            <button id="restart-btn">最初から</button>
+          </div>
+
+          <div class="demo-explanation">
+            <p class="code-title">実装コード:</p>
+            <div class="code-block">
+              <pre><code class="language-javascript">// タイムラインを作成
+const tl = gsap.timeline({ paused: true });
+
+// ボックス要素を取得
+const box1 = document.querySelector(".box1");
+const box2 = document.querySelector(".box2");
+const box3 = document.querySelector(".box3");
+const box4 = document.querySelector(".box4");
+
+// タイムラインにアニメーションを追加
+tl.from(box1, { x: -200, opacity: 0, duration: 0.8, ease: "back.out(1.7)" })
+  .from(box2, { y: -150, opacity: 0, duration: 0.8, ease: "back.out(1.7)" })
+  .from(box3, { x: 200, opacity: 0, duration: 0.8, ease: "back.out(1.7)" })
+  .from(box4, { y: 150, opacity: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
+
+// コントロールボタン
+document.getElementById("play-btn").addEventListener("click", () => tl.play());
+document.getElementById("pause-btn").addEventListener("click", () => tl.pause());
+document.getElementById("resume-btn").addEventListener("click", () => tl.resume());
+document.getElementById("reverse-btn").addEventListener("click", () => tl.reverse());
+document.getElementById("restart-btn").addEventListener("click", () => tl.restart());</code></pre>
+              <button class="copy-button">コピー</button>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="controls">
-          <button class="control-btn play-btn">再生</button>
-          <button class="control-btn pause-btn">一時停止</button>
-          <button class="control-btn resume-btn">再開</button>
-          <button class="control-btn reverse-btn">逆再生</button>
-          <button class="control-btn restart-btn">最初から</button>
+      <div class="section">
+        <h3>タイムラインのタイミング制御</h3>
+        <p> GSAPのタイムラインでは、アニメーションの追加時にポジション・パラメータを使って タイミングを細かく調整することができます。 </p>
+
+        <div class="demo-explanation">
+          <p class="code-title">主なポジション設定方法:</p>
+          <div class="code-block">
+            <pre><code class="language-javascript">// 1. デフォルト - 前のアニメーションの後に追加（シーケンシャル）
+tl.to(element1, { x: 100, duration: 1 })
+  .to(element2, { y: 50, duration: 1 });
+
+// 2. 同時実行 - 相対時間を0に設定
+tl.to(element1, { x: 100, duration: 1 })
+  .to(element2, { y: 50, duration: 1 }, 0);
+
+// 3. 特定の時間に開始（絶対時間）
+tl.to(element1, { x: 100, duration: 1 })
+  .to(element2, { y: 50, duration: 1 }, 1.5); // 1.5秒の時点で開始
+
+// 4. 前のアニメーションと相対的に開始
+tl.to(element1, { x: 100, duration: 1 })
+  .to(element2, { y: 50, duration: 1 }, "-=0.5"); // 0.5秒前に開始
+  .to(element3, { scale: 1.5, duration: 1 }, "+=0.5"); // 0.5秒後に開始
+
+// 5. ラベルを使って時間位置を名前付けで管理
+tl.to(element1, { x: 100, duration: 1 })
+  .addLabel("middle")
+  .to(element2, { y: 50, duration: 1 })
+  .to(element3, { scale: 1.5, duration: 1 }, "middle"); // ラベル位置で開始</code></pre>
+            <button class="copy-button">コピー</button>
+          </div>
         </div>
       </div>
 
-      <div class="introduction">
-        <h2>タイムラインの実装方法</h2>
-        <p>GSAPのタイムラインは、<code class="inline-code">gsap.timeline()</code>メソッドで作成します。タイムラインにアニメーションを追加することで、時間順に実行されるシーケンスを構築できます。</p>
+      <div class="section">
+        <h3>タイムラインの制御方法</h3>
+        <p> タイムラインには再生、一時停止、逆再生など様々な制御メソッドがあります。 これらを使用してインタラクティブなアニメーションを作成できます。 </p>
+
+        <div class="demo-explanation">
+          <p class="code-title">タイムライン制御の主なメソッド:</p>
+          <ul>
+            <li><code>play()</code> - タイムラインを再生</li>
+            <li><code>pause()</code> - タイムラインを一時停止</li>
+            <li><code>resume()</code> - 一時停止から再開</li>
+            <li><code>reverse()</code> - 逆方向に再生</li>
+            <li><code>restart()</code> - 最初から再生</li>
+            <li><code>seek(position)</code> - 特定の位置にジャンプ</li>
+            <li><code>progress(ratio)</code> - 0～1の進行率で位置を設定</li>
+            <li><code>timeScale(value)</code> - 再生速度を調整 (1が通常速度)</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="code-block">
-        <pre><code class="language-javascript">// タイムラインを作成
-const tl = gsap.timeline({
-  defaults: {
-    duration: 0.7,
-    ease: "power1.inOut"
-  },
-  paused: true // 自動再生しない
-});
-
-// アニメーションをタイムラインに追加
-tl.to(".box1", { x: 100, rotation: 360 })
-  .to(".box2", { y: -50, scale: 1.2 }, "-=0.4") // 0.4秒オーバーラップ
-  .to(".box3", { x: -100, backgroundColor: "#9b59b6" }, "+=0.2") // 0.2秒遅延
-  .to(".box4", { y: 50, rotation: -180, scale: 0.8 });
-
-// 再生ボタン
-playBtn.addEventListener("click", () => {
-  tl.play();
-});
-
-// 一時停止ボタン
-pauseBtn.addEventListener("click", () => {
-  tl.pause();
-});
-
-// 再開ボタン
-resumeBtn.addEventListener("click", () => {
-  tl.resume();
-});
-
-// 逆再生ボタン
-reverseBtn.addEventListener("click", () => {
-  tl.reverse();
-});
-
-// 最初からボタン
-restartBtn.addEventListener("click", () => {
-  tl.restart();
-});</code></pre>
-      </div>
-
-      <div class="introduction">
-        <h2>タイムラインの重要なポイント</h2>
+      <div class="section">
+        <h3>タイムラインのメリット</h3>
+        <p> 個別のtween（単一のアニメーション）と比較して、タイムラインには以下のメリットがあります: </p>
         <ul>
-          <li><strong>位置パラメータ</strong> - <code class="inline-code">"-=0.4"</code>や<code class="inline-code">"+=0.2"</code>などを使うことで、アニメーション間の重なりや遅延を調整できます。</li>
-          <li
-            ><strong>制御メソッド</strong> - <code class="inline-code">play()</code>, <code class="inline-code">pause()</code>, <code class="inline-code">resume()</code>, <code class="inline-code">reverse()</code>,
-            <code class="inline-code">restart()</code>などのメソッドでタイムラインを制御できます。</li
-          >
-          <li><strong>デフォルト設定</strong> - タイムライン作成時に<code class="inline-code">defaults</code>を設定すると、すべてのアニメーションに共通の設定を適用できます。</li>
-          <li><strong>ラベル</strong> - <code class="inline-code">tl.add("labelName")</code>を使ってタイムライン上に名前付きポイントを作成し、そこにジャンプすることもできます。</li>
+          <li>複数のアニメーションを時間的に正確に調整できる</li>
+          <li>シーケンス全体を一括で制御できる（再生、一時停止、速度変更など）</li>
+          <li>アニメーションの追加・調整が柔軟にできる</li>
+          <li>変更が必要になった場合、一部のアニメーション時間を調整しても、それ以降のシーケンスが自動的に調整される</li>
+          <li>コードの可読性と保守性が向上する</li>
         </ul>
       </div>
 
-      <div class="introduction">
-        <h2>実験してみよう</h2>
-        <p>このコードを元に、次のようなバリエーションを試してみてください：</p>
-        <ul>
-          <li>アニメーションの順序を変更する</li>
-          <li>新しいプロパティや効果を追加する</li>
-          <li>タイムラインに繰り返し設定（<code class="inline-code">repeat</code>）を追加する</li>
-          <li>ヨーヨー効果（<code class="inline-code">yoyo: true</code>）を試す</li>
-          <li>異なるイージング関数を適用する</li>
-        </ul>
+      <div class="section">
+        <h3>まとめ</h3>
+        <p> GSAPのタイムラインは、複雑なアニメーションシーケンスを制作するための強力なツールです。 適切に使用することで、インタラクティブで魅力的なユーザー体験を提供できます。 </p>
+        <p> タイムラインのパラメータやメソッドを活用して、オリジナルのアニメーションシーケンスを作成してみましょう。 </p>
       </div>
-    </div>
+
+      <div class="next-step">
+        <h2>次のステップ</h2>
+        <p>スクロールに連動したアニメーションについて学びましょう：<a href="03_scroll_fade_in.html">スクロールフェードイン</a></p>
+      </div>
+    </section>
 
     <footer>
-      <p>GSAP勉強会サンプル - タイムラインシーケンスデモ</p>
+      <p>GSAPで作る魅力的なアニメーション勉強会</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
-    <script src="../common.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // ボタン要素を取得
-        const playBtn = document.querySelector(".play-btn");
-        const pauseBtn = document.querySelector(".pause-btn");
-        const resumeBtn = document.querySelector(".resume-btn");
-        const reverseBtn = document.querySelector(".reverse-btn");
-        const restartBtn = document.querySelector(".restart-btn");
+        // 初期位置設定
+        gsap.set(".box1", { x: -200, opacity: 0 });
+        gsap.set(".box2", { y: -150, opacity: 0 });
+        gsap.set(".box3", { x: 200, opacity: 0 });
+        gsap.set(".box4", { y: 150, opacity: 0 });
 
         // タイムラインを作成
-        const tl = gsap.timeline({
-          defaults: {
-            duration: 0.7,
-            ease: "power1.inOut",
-          },
-          paused: true, // 自動再生しない
-        });
+        const tl = gsap.timeline({ paused: true });
 
-        // アニメーションをタイムラインに追加
-        tl.to(".box1", { x: 100, rotation: 360 })
-          .to(".box2", { y: -50, scale: 1.2 }, "-=0.4") // 0.4秒オーバーラップ
-          .to(".box3", { x: -100, backgroundColor: "#9b59b6" }, "+=0.2") // 0.2秒遅延
-          .to(".box4", { y: 50, rotation: -180, scale: 0.8 });
+        // タイムラインにアニメーションを追加
+        tl.to(".box1", { x: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)" })
+          .to(".box2", { y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)" })
+          .to(".box3", { x: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)" })
+          .to(".box4", { y: 0, opacity: 1, duration: 0.8, ease: "elastic.out(1, 0.3)" });
 
-        // 再生ボタン
-        playBtn.addEventListener("click", () => {
+        // コントロールボタン
+        document.getElementById("play-btn").addEventListener("click", () => {
           tl.play();
         });
 
-        // 一時停止ボタン
-        pauseBtn.addEventListener("click", () => {
+        document.getElementById("pause-btn").addEventListener("click", () => {
           tl.pause();
         });
 
-        // 再開ボタン
-        resumeBtn.addEventListener("click", () => {
+        document.getElementById("resume-btn").addEventListener("click", () => {
           tl.resume();
         });
 
-        // 逆再生ボタン
-        reverseBtn.addEventListener("click", () => {
+        document.getElementById("reverse-btn").addEventListener("click", () => {
           tl.reverse();
         });
 
-        // 最初からボタン
-        restartBtn.addEventListener("click", () => {
+        document.getElementById("restart-btn").addEventListener("click", () => {
           tl.restart();
         });
       });
