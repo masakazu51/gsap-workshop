@@ -320,6 +320,7 @@ gsap.to("#ease-box", { x: 300, ease: "elastic.out(1,0.3)", duration: 1 });</code
         document.getElementById("run-timeline").addEventListener("click", function () {
           // タイムラインをリセット
           if (timeline) timeline.kill();
+          
 
           // 位置をリセット
           gsap.set(["#timeline-box1", "#timeline-box2", "#timeline-box3"], {
