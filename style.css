@@ -202,36 +202,72 @@ pre {
   overflow-x: auto;
   margin: 15px 0;
   position: relative;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: none !important;
 }
 
 code {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 0.9em;
   background-color: #f8f8f8;
   padding: 2px 5px;
   border-radius: 3px;
-  font-family: Consolas, monospace;
-  font-size: 0.9em;
   display: block;
-  padding: 15px;
-  white-space: pre;
   line-height: 1.5;
   overflow-x: auto;
+  tab-size: 2;
+  overflow: visible !important;
 }
 
+/* インラインコード */
+.inline-code,
+p code,
+li code {
+  background-color: #f5f5f5;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 0.9em;
+  color: #d63384;
+  display: inline;
+  white-space: normal;
+  line-height: inherit;
+}
+
+/* コードブロックのスタイル */
+.code-block {
+  margin: 15px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* コピーボタンのスタイル */
 .copy-button {
   position: absolute;
   top: 5px;
   right: 5px;
-  background-color: #2980b9;
-  color: white;
-  border: none;
-  border-radius: 3px;
   padding: 3px 8px;
   font-size: 12px;
   cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  opacity: 0.7;
+  transition: opacity 0.2s, background-color 0.2s;
+  z-index: 10;
 }
 
 .copy-button:hover {
-  background-color: #3498db;
+  opacity: 1;
+  background-color: #45a049;
+}
+
+.copy-button.copied {
+  background-color: #2196f3;
 }
 
 /* デモコンテナ */
@@ -674,79 +710,15 @@ ol ul {
   margin-bottom: 0.5em;
 }
 
-/* コードを含むリスト要素 */
-li code {
-  display: inline;
-  padding: 2px 5px;
-  white-space: normal;
-  line-height: inherit;
-}
-
 /* セクション内のリスト */
 .section ul,
 .section ol {
   margin-bottom: 1em;
 }
 
-/* コードブロックのスタイル */
-.code-block {
-  margin: 15px 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
-pre {
-  margin: 0;
-  padding: 15px;
-  border-radius: 5px;
-  overflow-x: auto !important;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  background-color: #f5f5f5;
-  position: relative;
-  max-height: none !important;
-}
-
-code {
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  font-size: 14px;
-  tab-size: 2;
-  overflow: visible !important;
-}
-
-.inline-code {
-  background-color: #f5f5f5;
-  padding: 2px 5px;
-  border-radius: 3px;
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  font-size: 0.9em;
-  color: #d63384;
-}
-
-/* コピーボタンのスタイル */
-.copy-button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  padding: 3px 8px;
-  font-size: 12px;
-  cursor: pointer;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-  z-index: 10;
-}
-
-.copy-button:hover {
-  opacity: 1;
-}
-
-.copy-button.copied {
-  background: #2196f3;
+.section ul li,
+.section ol li {
+  margin-bottom: 0.5rem;
 }
 
 /* Prism.jsのカスタムスタイル */
@@ -1023,6 +995,21 @@ pre.line-numbers > code {
   background-color: #0055aa;
 }
 
+/* 新しいセクションスタイル */
+.divider {
+  margin: 2rem 0;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.footer-text {
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
 /* レスポンシブデザイン */
 @media (max-width: 768px) {
   body {
@@ -1105,25 +1092,4 @@ pre.line-numbers > code {
   .card-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* 新しいセクションスタイル */
-.divider {
-  margin: 2rem 0;
-  border: 0;
-  height: 1px;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-}
-
-.footer-text {
-  text-align: center;
-  color: #777;
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-}
-
-/* リスト項目の余白調整 */
-.section ul li,
-.section ol li {
-  margin-bottom: 0.5rem;
 }

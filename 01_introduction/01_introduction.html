@@ -33,64 +33,75 @@
     </nav>
 
     <div class="container">
-      <h2>GSAPとは</h2>
-      <p> GSAP（GreenSock Animation Platform）は、Webサイト向けの高機能なJavaScriptアニメーションライブラリです。 複雑な動きをシンプルなコードで実現でき、滑らかでパフォーマンスの高いアニメーションを作成できます。 </p>
+      <section class="section">
+        <h2>GSAPとは</h2>
+        <p> GSAP（GreenSock Animation Platform）は、Webサイト向けの高機能なJavaScriptアニメーションライブラリです。 複雑な動きをシンプルなコードで実現でき、滑らかでパフォーマンスの高いアニメーションを作成できます。 </p>
+      </section>
 
-      <h2>GSAPの主な特徴</h2>
-      <ul class="feature-list">
-        <li><strong>DOM要素のアニメーション</strong>: 位置、サイズ、色、透明度などのCSSプロパティを簡単にアニメーション化</li>
-        <li><strong>SVG要素のアニメーション</strong>: ベクター形式の画像や図形も自在に動かせる</li>
-        <li><strong>高いパフォーマンス</strong>: 最適化されたコードで滑らかなアニメーションを実現</li>
-        <li><strong>ブラウザ互換性</strong>: モダンブラウザから古いブラウザまで幅広く対応</li>
-        <li><strong>充実したAPI</strong>: アニメーションの制御（一時停止、再開、逆再生など）が可能</li>
-        <li><strong>プラグイン拡張</strong>: ScrollTriggerなど、様々な機能をプラグインで拡張できる</li>
-      </ul>
+      <section class="section">
+        <h2>GSAPの主な特徴</h2>
+        <ul class="feature-list">
+          <li><strong>DOM要素のアニメーション</strong>: 位置、サイズ、色、透明度などのCSSプロパティを簡単にアニメーション化</li>
+          <li><strong>SVG要素のアニメーション</strong>: ベクター形式の画像や図形も自在に動かせる</li>
+          <li><strong>高いパフォーマンス</strong>: 最適化されたコードで滑らかなアニメーションを実現</li>
+          <li><strong>ブラウザ互換性</strong>: モダンブラウザから古いブラウザまで幅広く対応</li>
+          <li><strong>充実したAPI</strong>: アニメーションの制御（一時停止、再開、逆再生など）が可能</li>
+          <li><strong>プラグイン拡張</strong>: ScrollTriggerなど、様々な機能をプラグインで拡張できる</li>
+        </ul>
+      </section>
 
-      <h2>GSAPでできること</h2>
-      <p>GSAPを使用することで、以下のようなアニメーションを簡単に実装できます：</p>
-      <ul class="feature-list">
-        <li>要素の移動、回転、拡大・縮小</li>
-        <li>色の変化やフェードイン・アウト</li>
-        <li>複数のアニメーションを連続して実行（タイムライン機能）</li>
-        <li>スクロールに連動したアニメーション（ScrollTriggerプラグイン）</li>
-      </ul>
+      <section class="section">
+        <h2>GSAPでできること</h2>
+        <p>GSAPを使用することで、以下のようなアニメーションを簡単に実装できます：</p>
+        <ul class="feature-list">
+          <li>要素の移動、回転、拡大・縮小</li>
+          <li>色の変化やフェードイン・アウト</li>
+          <li>複数のアニメーションを連続して実行（タイムライン機能）</li>
+          <li>スクロールに連動したアニメーション（ScrollTriggerプラグイン）</li>
+        </ul>
 
-      <div class="demo-container">
-        <h3>基本的なGSAPアニメーションのデモ</h3>
-        <div class="box-container">
-          <div class="box" id="demo-box"></div>
+        <div class="demo-container">
+          <h3>基本的なGSAPアニメーションのデモ</h3>
+          <div class="box-container">
+            <div class="box" id="demo-box"></div>
+          </div>
+
+          <div class="controls">
+            <button id="play-demo">アニメーション実行</button>
+            <button id="reset-demo">リセット</button>
+          </div>
         </div>
+      </section>
 
-        <div class="controls">
-          <button id="play-demo">アニメーション実行</button>
-          <button id="reset-demo">リセット</button>
-        </div>
-      </div>
+      <section class="section">
+        <h2>GSAPの基本概念</h2>
+        <h3>トゥイーン（Tween）</h3>
+        <p> GSAPの中心的な概念で、ある状態から別の状態への変化を定義します。 「Aの状態からBの状態へn秒かけて変化させる」という指示をコードで表現します。 </p>
 
-      <h2>GSAPの基本概念</h2>
-      <h3>トゥイーン（Tween）</h3>
-      <p> GSAPの中心的な概念で、ある状態から別の状態への変化を定義します。 「Aの状態からBの状態へn秒かけて変化させる」という指示をコードで表現します。 </p>
+        <h3>タイムライン（Timeline）</h3>
+        <p> 複数のトゥイーンを順序立てて管理する機能です。アニメーションのシーケンスを簡単に作成できます。 </p>
 
-      <h3>タイムライン（Timeline）</h3>
-      <p> 複数のトゥイーンを順序立てて管理する機能です。アニメーションのシーケンスを簡単に作成できます。 </p>
+        <h3>イージング（Easing）</h3>
+        <p> アニメーションの加速・減速パターンを定義します。自然な動きを表現するために重要な要素です。 </p>
+      </section>
 
-      <h3>イージング（Easing）</h3>
-      <p> アニメーションの加速・減速パターンを定義します。自然な動きを表現するために重要な要素です。 </p>
-
-      <h2>実際のコード例</h2>
-      <p>以下は、要素を右に100px移動させる最も基本的なGSAPコードです：</p>
-      <div class="code-block">
-        <pre><code class="language-javascript">// 要素を1秒かけて右に100px移動
+      <section class="section">
+        <h2>実際のコード例</h2>
+        <p>以下は、要素を右に100px移動させる最も基本的なGSAPコードです：</p>
+        <div class="code-block">
+          <pre><code class="language-javascript">// 要素を1秒かけて右に100px移動
 gsap.to(".my-element", {
   x: 100,
   duration: 1,
   ease: "power1.out"
 });</code></pre>
-      </div>
+        </div>
+      </section>
 
-      <h2>主要なGSAPメソッド</h2>
-      <div class="code-block">
-        <pre><code class="language-javascript">// 要素を特定の状態に変化させる
+      <section class="section">
+        <h2>主要なGSAPメソッド</h2>
+        <div class="code-block">
+          <pre><code class="language-javascript">// 要素を特定の状態に変化させる
 gsap.to(".element", {プロパティ});
 
 // 要素を現在の状態から開始し、指定した状態から現在の状態へ変化させる
@@ -102,7 +113,8 @@ gsap.fromTo(".element", {開始プロパティ}, {終了プロパティ});
 // タイムラインの作成
 const tl = gsap.timeline({オプション});
 tl.to(...).from(...).fromTo(...);</code></pre>
-      </div>
+        </div>
+      </section>
 
       <div class="next-step">
         <h2>次のステップ</h2>
