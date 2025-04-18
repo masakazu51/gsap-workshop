@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP基本例</title>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      header {
+        background-color: #3498db;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      nav {
+        background-color: #2980b9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      nav ul li {
+        margin: 0 10px;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+      }
+
+      nav ul li a:hover {
+        text-decoration: underline;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+
+      .example-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .box-container {
+        position: relative;
+        height: 100px;
+        margin: 20px 0;
+        border: 1px dashed #ccc;
+        overflow: hidden;
+      }
+
+      .box {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-color: #3498db;
+        border-radius: 4px;
+        left: 0;
+        top: 25px;
+      }
+
+      .box2 {
+        background-color: #e74c3c;
+      }
+
+      .box3 {
+        background-color: #2ecc71;
+      }
+
+      .box4 {
+        background-color: #f39c12;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin: 15px 0;
+        flex-wrap: wrap;
+      }
+
+      button {
+        padding: 8px 15px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      pre {
+        background-color: #f8f8f8;
+        padding: 10px;
+        border-radius: 4px;
+        overflow-x: auto;
+        margin: 10px 0;
+      }
+
+      code {
+        font-family: Consolas, Monaco, "Andale Mono", monospace;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .stagger-boxes {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+
+      .stagger-box {
+        width: 40px;
+        height: 40px;
+        background-color: #9b59b6;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>GSAP基本例</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="../index.html">ホーム</a></li>
+        <li><a href="../01_introduction/01_introduction.html">概要</a></li>
+        <li><a href="../02_benefits/02_benefits.html">メリット</a></li>
+        <li><a href="../03_good_animation/03_good_animation.html">良いアニメーション</a></li>
+        <li><a href="../04_basic_syntax/04_basic_syntax.html">基本構文</a></li>
+        <li><a href="../00_basics/00_basic_examples.html">基本例</a></li>
+        <li><a href="../05_examples/01_button_hover.html">ボタンホバー</a></li>
+        <li><a href="../05_examples/02_timeline_sequence.html">タイムライン</a></li>
+        <li><a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
+        <li><a href="../05_examples/04_scroll_progress.html">スクロール連動</a></li>
+        <li><a href="../05_examples/05_stagger_animation.html">スタッガー</a></li>
+      </ul>
+    </nav>
+
+    <div class="example-container">
+      <h2>1. 基本的な移動（gsap.to）</h2>
+      <p>要素を右に移動させる基本的なアニメーション</p>
+
+      <div class="box-container">
+        <div class="box" id="box1"></div>
+      </div>
+
+      <div class="controls">
+        <button id="play1">実行</button>
+        <button id="reset1">リセット</button>
+      </div>
+
+      <pre><code>// 要素を右に100px移動
+gsap.to("#box1", {
+  x: 300,
+  duration: 2
+});</code></pre>
+    </div>
+
+    <div class="example-container">
+      <h2>2. 初期状態からのアニメーション（gsap.from）</h2>
+      <p>右側から現在位置へ移動してくるアニメーション</p>
+
+      <div class="box-container">
+        <div class="box box2" id="box2"></div>
+      </div>
+
+      <div class="controls">
+        <button id="play2">実行</button>
+        <button id="reset2">リセット</button>
+      </div>
+
+      <pre><code>// 右側から現在位置へアニメーション
+gsap.from("#box2", {
+  x: 300,
+  duration: 2
+});</code></pre>
+    </div>
+
+    <div class="example-container">
+      <h2>3. 回転アニメーション</h2>
+      <p>要素を回転させるアニメーション</p>
+
+      <div class="box-container">
+        <div class="box box3" id="box3"></div>
+      </div>
+
+      <div class="controls">
+        <button id="play3">実行</button>
+        <button id="reset3">リセット</button>
+      </div>
+
+      <pre><code>// 要素を360度回転
+gsap.to("#box3", {
+  rotation: 360,
+  duration: 2
+});</code></pre>
+    </div>
+
+    <div class="example-container">
+      <h2>4. 複数プロパティのアニメーション</h2>
+      <p>位置、回転、大きさ、透明度を同時にアニメーション</p>
+
+      <div class="box-container">
+        <div class="box box4" id="box4"></div>
+      </div>
+
+      <div class="controls">
+        <button id="play4">実行</button>
+        <button id="reset4">リセット</button>
+      </div>
+
+      <pre><code>// 複数のプロパティをアニメーション
+gsap.to("#box4", {
+  x: 300,
+  rotation: 360,
+  scale: 1.5,
+  opacity: 0.5,
+  duration: 2
+});</code></pre>
+    </div>
+
+    <div class="example-container">
+      <h2>5. repeat と yoyo</h2>
+      <p>アニメーションを繰り返したり、往復させたりする</p>
+
+      <div class="box-container">
+        <div class="box" id="box5"></div>
+      </div>
+
+      <div class="controls">
+        <button id="play5a">繰り返し</button>
+        <button id="play5b">往復</button>
+        <button id="reset5">リセット</button>
+      </div>
+
+      <pre><code>// 繰り返し（3回）
+gsap.to("#box5", {
+  x: 300,
+  duration: 1,
+  repeat: 2  // 合計3回実行される
+});
+
+// 往復（3回）
+gsap.to("#box5", {
+  x: 300,
+  duration: 1,
+  repeat: 2,
+  yoyo: true  // 往復する
+});</code></pre>
+    </div>
+
+    <div class="example-container">
+      <h2>6. 異なるイージング</h2>
+      <p>イージング（加減速パターン）の違いを比較</p>
+
+      <div class="box-container">
+        <div class="box" id="box6"></div>
+      </div>
+
+      <div class="controls">
+        <button id="play6a">直線的</button>
+        <button id="play6b">減速</button>
+        <button id="play6c">加速</button>
+        <button id="play6d">加速後減速</button>
+        <button id="reset6">リセット</button>
+      </div>
+
+      <pre><code>// 直線的（一定速度）
+gsap.to("#box6", {
+  x: 300,
+  duration: 2,
+  ease: "none"
+});
+
+// 減速
+gsap.to("#box6", {
+  x: 300,
+  duration: 2,
+  ease: "power1.out"
+});
+
+// 加速
+gsap.to("#box6", {
+  x: 300,
+  duration: 2,
+  ease: "power1.in"
+});
+
+// 加速後減速
+gsap.to("#box6", {
+  x: 300,
+  duration: 2,
+  ease: "power1.inOut"
+});</code></pre>
+    </div>
+
+    <div class="example-container">
+      <h2>7. stagger効果（複数要素の時間差）</h2>
+      <p>複数の要素を時間差でアニメーションさせる</p>
+
+      <div class="stagger-boxes">
+        <div class="stagger-box"></div>
+        <div class="stagger-box"></div>
+        <div class="stagger-box"></div>
+        <div class="stagger-box"></div>
+        <div class="stagger-box"></div>
+      </div>
+
+      <div class="controls">
+        <button id="play7">実行</button>
+        <button id="reset7">リセット</button>
+      </div>
+
+      <pre><code>// 複数要素を時間差でアニメーション
+gsap.to(".stagger-box", {
+  y: 50,
+  opacity: 0.5,
+  duration: 1,
+  stagger: 0.2  // 0.2秒ずつ遅れて開始
+});</code></pre>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 例1: 基本的な移動
+        document.getElementById("play1").addEventListener("click", () => {
+          gsap.to("#box1", { x: 300, duration: 2 });
+        });
+        document.getElementById("reset1").addEventListener("click", () => {
+          gsap.to("#box1", { x: 0, duration: 0.5 });
+        });
+
+        // 例2: 初期状態からのアニメーション
+        document.getElementById("play2").addEventListener("click", () => {
+          gsap.from("#box2", { x: 300, duration: 2 });
+        });
+        document.getElementById("reset2").addEventListener("click", () => {
+          gsap.to("#box2", { x: 0, duration: 0.5 });
+        });
+
+        // 例3: 回転アニメーション
+        document.getElementById("play3").addEventListener("click", () => {
+          gsap.to("#box3", { rotation: 360, duration: 2 });
+        });
+        document.getElementById("reset3").addEventListener("click", () => {
+          gsap.to("#box3", { rotation: 0, duration: 0.5 });
+        });
+
+        // 例4: 複数プロパティのアニメーション
+        document.getElementById("play4").addEventListener("click", () => {
+          gsap.to("#box4", {
+            x: 300,
+            rotation: 360,
+            scale: 1.5,
+            opacity: 0.5,
+            duration: 2,
+          });
+        });
+        document.getElementById("reset4").addEventListener("click", () => {
+          gsap.to("#box4", {
+            x: 0,
+            rotation: 0,
+            scale: 1,
+            opacity: 1,
+            duration: 0.5,
+          });
+        });
+
+        // 例5: repeat と yoyo
+        document.getElementById("play5a").addEventListener("click", () => {
+          gsap.to("#box5", { x: 300, duration: 1, repeat: 2 });
+        });
+        document.getElementById("play5b").addEventListener("click", () => {
+          gsap.to("#box5", { x: 300, duration: 1, repeat: 2, yoyo: true });
+        });
+        document.getElementById("reset5").addEventListener("click", () => {
+          gsap.to("#box5", { x: 0, duration: 0.5 });
+        });
+
+        // 例6: 異なるイージング
+        document.getElementById("play6a").addEventListener("click", () => {
+          gsap.to("#box6", { x: 300, duration: 2, ease: "none" });
+        });
+        document.getElementById("play6b").addEventListener("click", () => {
+          gsap.to("#box6", { x: 300, duration: 2, ease: "power1.out" });
+        });
+        document.getElementById("play6c").addEventListener("click", () => {
+          gsap.to("#box6", { x: 300, duration: 2, ease: "power1.in" });
+        });
+        document.getElementById("play6d").addEventListener("click", () => {
+          gsap.to("#box6", { x: 300, duration: 2, ease: "power1.inOut" });
+        });
+        document.getElementById("reset6").addEventListener("click", () => {
+          gsap.to("#box6", { x: 0, duration: 0.5 });
+        });
+
+        // 例7: staggerアニメーション
+        document.getElementById("play7").addEventListener("click", () => {
+          gsap.to(".stagger-box", {
+            y: 50,
+            opacity: 0.5,
+            duration: 1,
+            stagger: 0.2,
+          });
+        });
+        document.getElementById("reset7").addEventListener("click", () => {
+          gsap.to(".stagger-box", {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

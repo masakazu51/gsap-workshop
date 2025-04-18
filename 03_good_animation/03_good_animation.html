@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webでの良いアニメーション</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Webでの良いアニメーション</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="../index.html">ホーム</a></li>
+        <li><a href="../01_introduction/01_introduction.html">概要</a></li>
+        <li><a href="../02_benefits/02_benefits.html">メリット</a></li>
+        <li><a href="../03_good_animation/03_good_animation.html">良いアニメーション</a></li>
+        <li><a href="../04_basic_syntax/04_basic_syntax.html">基本構文と例</a></li>
+        <li><a href="../05_examples/01_button_hover.html">ボタンホバー</a></li>
+        <li><a href="../05_examples/02_timeline_sequence.html">タイムライン</a></li>
+        <li><a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
+        <li><a href="../05_examples/04_scroll_progress.html">スクロール連動</a></li>
+        <li><a href="../05_examples/05_stagger_animation.html">スタッガー</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <p> ユーザー体験を向上させる良質なWebアニメーションの原則について解説します。 単に「動けば良い」わけではなく、目的を持ったアニメーションこそが効果的です。 </p>
+
+      <!-- セクション1: 自然な動き -->
+      <div class="section">
+        <h2>1. 自然で直感的な動き</h2>
+
+        <h3>物理法則に基づく動き</h3>
+        <p> 現実世界での物体の動きは、物理法則に従っています。 これをWebアニメーションにも応用することで、直感的で自然な動きを実現できます。 </p>
+        <ul>
+          <li><strong>慣性</strong>: 物体は急に動き出したり止まったりしない</li>
+          <li><strong>摩擦</strong>: 徐々に速度が低下する</li>
+          <li><strong>重力</strong>: 落下時の加速、バウンドなどの効果</li>
+        </ul>
+
+        <h3>イージング（Easing）の重要性</h3>
+        <p> イージングとは、アニメーションの速度変化のパターンのことで、 自然な動きを表現するために欠かせません。 </p>
+
+        <div class="demo-container">
+          <h3>イージングの比較デモ</h3>
+          <div class="box-container" style="height: 200px">
+            <div class="box" id="linear-box" style="top: 25px"></div>
+            <div class="box box-red" id="ease-out-box" style="top: 75px"></div>
+            <div class="box box-green" id="bounce-box" style="top: 125px"></div>
+          </div>
+
+          <div class="controls">
+            <button id="run-easing">実行</button>
+            <button id="reset-easing">リセット</button>
+          </div>
+
+          <div style="margin-top: 20px">
+            <div><strong>青</strong>: リニア (一定速度)</div>
+            <div><strong>赤</strong>: イージングアウト (自然な減速)</div>
+            <div><strong>緑</strong>: バウンス (跳ね返り)</div>
+          </div>
+
+          <h4>イージングのコード</h4>
+          <div class="code-block">
+            <pre><code class="language-javascript">// リニア（不自然）
+gsap.to("#linear-box", {
+  x: 300,
+  duration: 2,
+  ease: "none"
+});
+
+// イージングアウト（自然な減速）
+gsap.to("#ease-out-box", {
+  x: 300,
+  duration: 2,
+  ease: "power2.out"
+});
+
+// バウンス（跳ね返り）
+gsap.to("#bounce-box", {
+  x: 300,
+  duration: 2,
+  ease: "bounce.out"
+});</code></pre>
+          </div>
+        </div>
+
+        <h4>主なイージングのタイプ</h4>
+        <ul>
+          <li><strong>Ease-In</strong>: 最初はゆっくり、徐々に加速（離れていく要素に適している）</li>
+          <li><strong>Ease-Out</strong>: 素早く始まり、徐々に減速（画面に入ってくる要素に適している）</li>
+          <li><strong>Ease-In-Out</strong>: 最初と最後がゆっくりで中間が速い（長いアニメーションに適している）</li>
+        </ul>
+      </div>
+
+      <!-- セクション2: タイミング -->
+      <div class="section">
+        <h2>2. タイミングと緩急の適切な設定</h2>
+
+        <h3>アニメーション時間（Duration）</h3>
+        <p> アニメーションの時間設定は、ユーザー体験に大きく影響します： </p>
+        <ul>
+          <li><strong>短すぎる</strong>: ユーザーが認識できない（0.1秒未満）</li>
+          <li><strong>長すぎる</strong>: ユーザーをイライラさせる（0.5秒以上の基本動作）</li>
+        </ul>
+
+        <h4>要素サイズ別の推奨時間</h4>
+        <table aria-label="アニメーション要素サイズ別の推奨時間">
+          <thead>
+            <tr>
+              <th>要素の大きさ</th>
+              <th>推奨時間</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>小（アイコンなど）</td>
+              <td>100-200ms</td>
+            </tr>
+            <tr>
+              <td>中（カード、ボタンなど）</td>
+              <td>200-300ms</td>
+            </tr>
+            <tr>
+              <td>大（モーダル、画面遷移）</td>
+              <td>300-500ms</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="demo-container">
+          <h3>アニメーション時間の比較デモ</h3>
+          <div class="box-container">
+            <div class="box" id="duration-box"></div>
+          </div>
+
+          <div class="controls">
+            <button id="duration-100">短い (100ms)</button>
+            <button id="duration-300">中間 (300ms)</button>
+            <button id="duration-1000">長い (1000ms)</button>
+            <button id="reset-duration">リセット</button>
+          </div>
+
+          <h4>アニメーション時間のコード</h4>
+          <div class="code-block">
+            <pre><code class="language-javascript">// 短いアニメーション (100ms)
+gsap.to("#duration-box", {
+  x: 300,
+  duration: 0.1,
+  ease: "power1.out"
+});
+
+// 中間のアニメーション (300ms)
+gsap.to("#duration-box", {
+  x: 300,
+  duration: 0.3,
+  ease: "power1.out"
+});
+
+// 長いアニメーション (1000ms)
+gsap.to("#duration-box", {
+  x: 300,
+  duration: 1,
+  ease: "power1.out"
+});</code></pre>
+          </div>
+        </div>
+
+        <h3>文脈に応じたイージングの選択</h3>
+        <ul>
+          <li><strong>UI要素のフィードバック</strong>: Ease-Out（素早く反応し、ゆっくり終わる）</li>
+          <li><strong>画面に入ってくる要素</strong>: Ease-Out（ゆっくり減速して停止）</li>
+          <li><strong>画面から出ていく要素</strong>: Ease-In（徐々に加速して去る）</li>
+          <li><strong>注目してほしい要素</strong>: バウンスやエラスティック（強調効果）</li>
+        </ul>
+      </div>
+
+      <!-- セクション3: アニメーションの目的 -->
+      <div class="section">
+        <h2>3. アニメーションの目的を明確に</h2>
+
+        <h3>機能的なアニメーション</h3>
+        <p> 目的があり、ユーザー体験を向上させるアニメーション： </p>
+        <ul>
+          <li><strong>フィードバック</strong>: ユーザーの操作に対する応答（ボタンクリック時の変化など）</li>
+          <li><strong>注目誘導</strong>: 重要な情報やアクションへの注意を引く</li>
+          <li><strong>連続性</strong>: 画面遷移や状態変化の関係性を示す</li>
+        </ul>
+
+        <div class="demo-container">
+          <h3>機能的なアニメーションの例: フィードバック</h3>
+
+          <div style="display: flex; gap: 20px; margin: 20px 0">
+            <button id="feedback-button" style="transform-origin: center; padding: 15px 30px"> クリックしてください </button>
+
+            <div id="feedback-message" style="opacity: 0; background-color: #2ecc71; color: white; padding: 15px; border-radius: 5px; display: flex; align-items: center"> 送信しました！ </div>
+          </div>
+
+          <h4>フィードバックアニメーションのコード</h4>
+          <div class="code-block">
+            <pre><code class="language-javascript">// ボタンのフィードバックアニメーション
+button.addEventListener("click", () => {
+  // ボタンに小さな「押された」エフェクト
+  gsap.to(button, {
+    scale: 0.95,
+    duration: 0.1,
+    onComplete: () => {
+      // 押された後、元に戻る
+      gsap.to(button, {
+        scale: 1,
+        duration: 0.3,
+        ease: "back.out"
+      });
+
+      // 成功メッセージを表示
+      gsap.to(message, {
+        opacity: 1,
+        x: 0,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    }
+  });
+});</code></pre>
+          </div>
+        </div>
+
+        <h3>注目誘導のアニメーション</h3>
+        <p> 重要な情報やアクションに注意を向けるためのアニメーション： </p>
+
+        <div class="demo-container">
+          <h3>注目誘導の例: 重要な通知</h3>
+
+          <div style="position: relative; margin: 30px 0; padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9">
+            <div id="notification" style="position: absolute; right: 20px; top: -10px; background-color: #e74c3c; color: white; padding: 5px 10px; border-radius: 50%; font-weight: bold; font-size: 12px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center"> 3 </div>
+            <h3 style="margin-top: 0">メールボックス</h3>
+            <p>お知らせがあります。確認してください。</p>
+          </div>
+
+          <button id="show-notification">通知を表示</button>
+          <button id="hide-notification">通知を隠す</button>
+
+          <h4>注目誘導アニメーションのコード</h4>
+          <div class="code-block">
+            <pre><code class="language-javascript">// 通知バッジの注目誘導アニメーション
+function animateNotification() {
+  // 最初は小さく
+  gsap.set(notification, { scale: 0 });
+
+  // バウンドしながら出現 (注目を集める)
+  gsap.to(notification, {
+    scale: 1,
+    duration: 0.5,
+    ease: "elastic.out(1, 0.5)"
+  });
+
+  // 小さなパルスアニメーションを繰り返す (存在をアピール)
+  gsap.to(notification, {
+    scale: 1.2,
+    repeat: 1,
+    yoyo: true,
+    duration: 0.3,
+    delay: 0.5
+  });
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- セクション4: パフォーマンスと最適化 -->
+      <div class="section">
+        <h2>4. パフォーマンスを考慮したアニメーション</h2>
+
+        <p> 美しいアニメーションも、パフォーマンスが悪ければ意味がありません。 快適なユーザー体験のためにパフォーマンスを最適化する方法を紹介します。 </p>
+
+        <h3>GPUアクセラレーション</h3>
+        <p> ブラウザのレンダリングエンジンがGPUを使って処理できるプロパティを優先的に使用します： </p>
+
+        <div class="code-block">
+          <pre><code class="language-javascript">// GPUアクセラレーションを活かせるプロパティ
+gsap.to(element, {
+  x: 100,           // transform: translateX()
+  y: 100,           // transform: translateY()
+  rotation: 45,     // transform: rotate()
+  scale: 1.5,       // transform: scale()
+  opacity: 0.5      // opacity
+});
+
+// 避けるべきプロパティ（必要な場合のみ使用）
+gsap.to(element, {
+  left: 100,        // 要素のレイアウト再計算が必要
+  top: 100,         // 要素のレイアウト再計算が必要
+  width: 200,       // 要素のレイアウト再計算が必要
+  height: 150       // 要素のレイアウト再計算が必要
+});</code></pre>
+        </div>
+
+        <h3>複雑なアニメーションの段階的追加</h3>
+        <ul>
+          <li>最初は基本的なアニメーションを実装</li>
+          <li>動作確認とパフォーマンステストを行う</li>
+          <li>問題がなければ段階的に複雑さを増す</li>
+        </ul>
+      </div>
+
+      <!-- セクション5: アクセシビリティ -->
+      <div class="section">
+        <h2>5. アクセシビリティへの配慮</h2>
+
+        <p> すべてのユーザーが快適に利用できるように、アニメーションを設計する際はアクセシビリティを考慮しましょう。 </p>
+
+        <h3>アニメーションの制御を提供</h3>
+        <p> 前庭障害（平衡感覚の障害）のあるユーザーなど、動きに敏感なユーザーのために、アニメーションを無効化するオプションを提供することを検討しましょう。 </p>
+
+        <div class="code-block">
+          <pre><code class="language-javascript">// ユーザー設定に基づいてアニメーションを制御
+const userPreferenceReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function animateElement() {
+  // 動きの低減設定がされている場合
+  if (userPreferenceReducedMotion.matches) {
+    // アニメーションなし、または簡略化したアニメーション
+    gsap.to(element, { opacity: 1, duration: 0 });
+  } else {
+    // 通常のアニメーション
+    gsap.from(element, {
+      opacity: 0,
+      y: 30,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+  }
+}</code></pre>
+        </div>
+
+        <h3>注意すべきポイント</h3>
+        <ul>
+          <li><strong>過度なフラッシングを避ける</strong>: 光過敏性発作のリスクの軽減</li>
+          <li><strong>適切なコントラスト</strong>: 低視力のユーザーへの配慮</li>
+          <li><strong>アニメーションの持続時間</strong>: 長すぎるアニメーションは避ける</li>
+          <li><strong>ユーザーコントロール</strong>: 可能な限り一時停止や速度調整のオプションを提供</li>
+        </ul>
+      </div>
+
+      <div class="next-step">
+        <h2>次のステップ</h2>
+        <p>GSAPの基本構文と実際のコード例を見てみましょう：<a href="../04_basic_syntax/04_basic_syntax.html">GSAPの基本構文と例</a></p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+    <script src="../common.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // イージングデモ
+        document.getElementById("run-easing").addEventListener("click", function () {
+          gsap.to("#linear-box", {
+            x: 300,
+            duration: 2,
+            ease: "none",
+          });
+
+          gsap.to("#ease-out-box", {
+            x: 300,
+            duration: 2,
+            ease: "power2.out",
+          });
+
+          gsap.to("#bounce-box", {
+            x: 300,
+            duration: 2,
+            ease: "bounce.out",
+          });
+        });
+
+        document.getElementById("reset-easing").addEventListener("click", function () {
+          gsap.to(["#linear-box", "#ease-out-box", "#bounce-box"], {
+            x: 0,
+            duration: 0.5,
+          });
+        });
+
+        // アニメーション時間比較デモ
+        document.getElementById("duration-100").addEventListener("click", function () {
+          gsap.to("#duration-box", {
+            x: 300,
+            duration: 0.1,
+            ease: "power1.out",
+          });
+        });
+
+        document.getElementById("duration-300").addEventListener("click", function () {
+          gsap.to("#duration-box", {
+            x: 300,
+            duration: 0.3,
+            ease: "power1.out",
+          });
+        });
+
+        document.getElementById("duration-1000").addEventListener("click", function () {
+          gsap.to("#duration-box", {
+            x: 300,
+            duration: 1,
+            ease: "power1.out",
+          });
+        });
+
+        document.getElementById("reset-duration").addEventListener("click", function () {
+          gsap.to("#duration-box", {
+            x: 0,
+            duration: 0.3,
+          });
+        });
+
+        // フィードバックアニメーションデモ
+        document.getElementById("feedback-button").addEventListener("click", function () {
+          const button = this;
+          const message = document.getElementById("feedback-message");
+
+          // ボタンに小さな「押された」エフェクト
+          gsap.to(button, {
+            scale: 0.95,
+            duration: 0.1,
+            onComplete: function () {
+              // 押された後、元に戻る
+              gsap.to(button, {
+                scale: 1,
+                duration: 0.3,
+                ease: "back.out",
+              });
+
+              // 成功メッセージを表示
+              gsap.to(message, {
+                opacity: 1,
+                duration: 0.3,
+                ease: "power2.out",
+              });
+
+              // 3秒後にメッセージを非表示
+              gsap.to(message, {
+                opacity: 0,
+                duration: 0.3,
+                delay: 3,
+              });
+            },
+          });
+        });
+
+        // 通知アニメーションデモ
+        const notification = document.getElementById("notification");
+
+        // 初期状態（非表示）
+        gsap.set(notification, { scale: 0 });
+
+        document.getElementById("show-notification").addEventListener("click", function () {
+          // バウンドしながら出現
+          gsap.to(notification, {
+            scale: 1,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.5)",
+          });
+
+          // 小さなパルスアニメーションを繰り返す
+          gsap.to(notification, {
+            scale: 1.2,
+            repeat: 1,
+            yoyo: true,
+            duration: 0.3,
+            delay: 0.5,
+          });
+        });
+
+        document.getElementById("hide-notification").addEventListener("click", function () {
+          gsap.to(notification, {
+            scale: 0,
+            duration: 0.3,
+            ease: "power2.in",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

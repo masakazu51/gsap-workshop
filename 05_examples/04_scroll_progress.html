@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAPスクロール連動アニメーション</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <style>
+      /* ページ内追加スタイル */
+      .scroll-guide {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background-color: rgba(52, 152, 219, 0.8);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .demo-label {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 12px;
+        z-index: 10;
+      }
+
+      .scroll-arrow {
+        display: block;
+        text-align: center;
+        margin: 20px 0;
+        color: #3498db;
+        font-size: 24px;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-20px);
+        }
+        60% {
+          transform: translateY(-10px);
+        }
+      }
+
+      pre {
+        margin: 0;
+        padding: 0;
+        border-radius: 5px;
+        max-height: 400px;
+        overflow: auto;
+      }
+
+      code {
+        font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+        font-size: 14px;
+      }
+
+      .code-block {
+        margin: 15px 0;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .inline-code {
+        background-color: #f5f5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar-container">
+      <div class="progress-bar"></div>
+    </div>
+
+    <header>
+      <h1>スクロール連動アニメーション</h1>
+      <p>GSAPのScrollTriggerを使ったスクラブ効果</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="../index.html">ホーム</a></li>
+        <li><a href="../01_introduction/01_introduction.html">概要</a></li>
+        <li><a href="../02_benefits/02_benefits.html">メリット</a></li>
+        <li><a href="../03_good_animation/03_good_animation.html">良いアニメーション</a></li>
+        <li><a href="../04_basic_syntax/04_basic_syntax.html">基本構文と例</a></li>
+        <li><a href="../05_examples/01_button_hover.html">ボタンホバー</a></li>
+        <li><a href="../05_examples/02_timeline_sequence.html">タイムライン</a></li>
+        <li><a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
+        <li><a href="../05_examples/04_scroll_progress.html">スクロール連動</a></li>
+        <li><a href="../05_examples/05_stagger_animation.html">スタッガー</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      <div class="introduction">
+        <h2>ScrollTriggerのscrub機能</h2>
+        <p>ScrollTriggerの<strong>scrub</strong>パラメータを使うと、スクロール量にアニメーションの進行度を連動させることができます。通常のアニメーションと異なり、ユーザーのスクロール速度や方向に従ってアニメーションが進行します。</p>
+        <p>下記の3つのデモでは、それぞれ異なるスクロール連動効果を実装しています。ゆっくりスクロールしながら、各セクションの動きを観察してください。逆方向にスクロールすると、アニメーションも逆に動きます。</p>
+        <div class="scroll-arrow">↓</div>
+      </div>
+
+      <!-- パララックス効果のデモ -->
+      <h2>1. 基本的なスクラブ効果（パララックス）</h2>
+      <p>このデモでは、スクロールに合わせて青い四角形が上下に移動します。これがパララックス効果の基本形です。</p>
+      <div class="scroll-section" id="parallax-section">
+        <div class="demo-label">パララックスデモ</div>
+        <div class="parallax-image">スクロールで移動</div>
+      </div>
+
+      <div class="introduction">
+        <h3>パララックス効果の実装コード:</h3>
+        <div class="code-block">
+          <pre><code class="language-javascript">gsap.fromTo(
+  ".parallax-image",
+  {
+    y: -300 // 開始位置
+  },
+  {
+    y: 300, // 終了位置
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#parallax-section",
+      start: "top bottom",
+      end: "bottom top",
+      scrub: true, // スクロールに連動
+      // markers: true // デバッグ用マーカー
+    }
+  }
+);</code></pre>
+        </div>
+        <p>このコードでは、<span class="inline-code">scrub: true</span>を設定することで、スクロール量にアニメーションの進行度を連動させています。ユーザーがスクロールを進めるとアニメーションも進み、戻すとアニメーションも戻ります。</p>
+        <p><strong>試してみよう：</strong>ゆっくりスクロールしたり、すばやくスクロールしたりして、青い四角形の動きの違いを観察してください。</p>
+        <div class="scroll-arrow">↓</div>
+      </div>
+
+      <!-- 水平スクロールのデモ -->
+      <h2>2. 水平スクロール効果</h2>
+      <p>このデモでは、縦スクロールを水平方向の動きに変換します。セクションがピン留めされ、スクロールすると横にスライドするパネルが表示されます。</p>
+      <div class="horizontal-scroll" id="horizontal-section">
+        <div class="demo-label">水平スクロールデモ</div>
+        <div class="horizontal-container">
+          <div class="panel panel1">パネル 1</div>
+          <div class="panel panel2">パネル 2</div>
+          <div class="panel panel3">パネル 3</div>
+          <div class="panel panel4">パネル 4</div>
+        </div>
+      </div>
+
+      <div class="introduction">
+        <h3>水平スクロールの実装コード:</h3>
+        <div class="code-block">
+          <pre><code class="language-javascript">gsap.to(".horizontal-container", {
+  x: () => -(
+    document.querySelector(".horizontal-container").offsetWidth - window.innerWidth
+  ),
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#horizontal-section",
+    start: "top top",
+    end: "+=2000", // スクロール量をピクセルで指定
+    scrub: 1, // スクロールの遅延（数値指定）
+    pin: true // セクションを画面に固定
+  }
+});</code></pre>
+        </div>
+        <p>このコードでは、<span class="inline-code">scrub: 1</span>と数値を指定することで、スクロールとアニメーションの間に1秒の遅延を持たせています。また、<span class="inline-code">pin: true</span>でセクションを画面に固定し、縦スクロールを水平方向の動きに変換しています。</p>
+        <p><strong>試してみよう：</strong>このセクションをゆっくりスクロールして、パネルが順番に表示される様子を確認してください。スクロールを戻すと、パネルも逆方向に動きます。</p>
+        <div class="scroll-arrow">↓</div>
+      </div>
+
+      <!-- 要素の変形デモ -->
+      <h2>3. 要素の変形アニメーション</h2>
+      <p>このデモでは、スクロールに応じて円が大きく変形し、色も変化します。複数のアニメーションステップがスクロール位置に連動します。</p>
+      <div class="pinned-section" id="transform-section">
+        <div class="demo-label">変形アニメーションデモ</div>
+        <div class="pinned-content">
+          <div class="circle" id="animated-circle"></div>
+          <h3>スクロールでゆっくり変形します</h3>
+          <p>下にスクロールし続けると、円が徐々に変化します</p>
+        </div>
+      </div>
+
+      <div class="introduction">
+        <h3>要素変形の実装コード:</h3>
+        <div class="code-block">
+          <pre><code class="language-javascript">// ピン留めの設定
+ScrollTrigger.create({
+  trigger: "#transform-section",
+  start: "top top",
+  end: "+=300%", // スクロール範囲を広げる
+  pin: ".pinned-content",
+  pinSpacing: true
+});
+
+// アニメーションタイムライン
+gsap.timeline({
+  scrollTrigger: {
+    trigger: "#transform-section",
+    start: "top top",
+    end: "+=300%", // 広いスクロール範囲
+    scrub: 2 // 2秒の遅延
+  }
+})
+.to("#animated-circle", {
+  scale: 1.5,
+  opacity: 1,
+  duration: 1.5
+})
+.to("#animated-circle", {
+  borderRadius: "30%",
+  backgroundColor: "#3498db",
+  duration: 1.5
+})
+.to("#animated-circle", {
+  scale: 2.5,
+  rotation: 180,
+  backgroundColor: "#2ecc71",
+  duration: 1.5
+})
+.to("#animated-circle", {
+  scale: 3,
+  rotation: 360,
+  backgroundColor: "#f39c12",
+  duration: 1.5
+});</code></pre>
+        </div>
+        <p>このコードでは、タイムラインとスクラブを組み合わせて、スクロールに応じて複数のアニメーションを連続して実行しています。<span class="inline-code">scrub: 2</span>の設定により、スクロールとアニメーションの間に2秒の遅延があり、よりスムーズな動きを実現しています。</p>
+        <p><strong>試してみよう：</strong>ゆっくりとスクロールして、円がサイズ、形、色を変化させる様子を観察してください。スクロールを止めると、アニメーションも一時停止します。</p>
+      </div>
+
+      <div class="introduction">
+        <h3>円の変形アニメーションコード:</h3>
+        <div class="code-block">
+          <pre><code class="language-javascript">gsap.fromTo(
+  "#animated-circle",
+  {
+    scale: 0.5,
+    opacity: 0,
+    rotation: 0,
+    borderRadius: "50%",
+    backgroundColor: "#e74c3c"
+  },
+  {
+    scale: 3,
+    opacity: 1,
+    rotation: 360,
+    borderRadius: "10%",
+    backgroundColor: "#3498db",
+    ease: "power1.inOut", // よりゆっくりなイージング
+    scrollTrigger: {
+      trigger: "#transform-section",
+      start: "top 90%", // より早く始まる
+      end: "bottom top", // ページを抜けるまで続く
+      scrub: 2, // スクロールとアニメーションの間に遅延を追加
+      // markers: true // デバッグ用マーカー
+    }
+  }
+);</code></pre>
+        </div>
+        <p>このコードでは、<span class="inline-code">scrub: 2</span>を設定することで、スクロールとアニメーションの間に遅延を持たせています。これにより、スクロールに対してアニメーションがゆっくりと追従し、変化を観察しやすくなります。</p>
+      </div>
+
+      <div class="introduction">
+        <h2>スクロール連動アニメーションのポイント</h2>
+        <ol>
+          <li><strong>scrubパラメータ</strong>: trueに設定すると即時連動、数値を設定すると遅延が生まれます</li>
+          <li><strong>start/endの設定</strong>: アニメーションの開始・終了位置を細かく調整できます</li>
+          <li><strong>pin機能</strong>: 要素を画面に固定して、スクロールに対する様々な表現が可能になります</li>
+          <li><strong>timelineとの組み合わせ</strong>: 複数のアニメーションをスクロールに連動させることができます</li>
+        </ol>
+        <p>ScrollTriggerのスクラブ機能は、インタラクティブなWebサイトやデジタルストーリーテリングに非常に効果的です。ユーザーのスクロールに合わせて物語を展開したり、情報を段階的に表示したりすることができます。</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>GSAP勉強会サンプル - ScrollTriggerスクラブデモ</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+    <script src="../common.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // ScrollTriggerプラグインを登録
+        gsap.registerPlugin(ScrollTrigger);
+
+        // スクロールプログレスバー
+        gsap.to(".progress-bar", {
+          width: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.3,
+          },
+        });
+
+        // 1. パララックス効果
+        gsap.fromTo(
+          ".parallax-image",
+          { y: -300 }, // 開始位置
+          {
+            y: 300, // 終了位置
+            ease: "none",
+            scrollTrigger: {
+              trigger: "#parallax-section",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true, // スクロールに連動
+              // markers: true
+            },
+          }
+        );
+
+        // 2. 水平スクロール
+        gsap.to(".horizontal-container", {
+          x: () => -(document.querySelector(".horizontal-container").offsetWidth - window.innerWidth),
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#horizontal-section",
+            start: "top top",
+            end: "+=2000", // スクロール量をピクセルで指定
+            scrub: 1, // スクロールの遅延（数値指定）
+            pin: true, // セクションを画面に固定
+          },
+        });
+
+        // 3. 要素の変形アニメーション - ピン留め
+        ScrollTrigger.create({
+          trigger: "#transform-section",
+          start: "top top",
+          end: "+=300%", // スクロール範囲を大幅に広げる
+          pin: ".pinned-content",
+          pinSpacing: true,
+        });
+
+        // 円の表示とアニメーション
+        gsap.set("#animated-circle", {
+          opacity: 0,
+          scale: 0.5,
+          backgroundColor: "#e74c3c",
+        }); // 初期状態を設定
+
+        // タイムラインアニメーション
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: "#transform-section",
+              start: "top top",
+              end: "+=300%", // スクロール範囲を大幅に広げる
+              scrub: 2, // スクロールに対して遅延を追加
+            },
+          })
+          .to("#animated-circle", {
+            scale: 1.5,
+            opacity: 1,
+            duration: 1.5, // 期間を長く
+          })
+          .to("#animated-circle", {
+            scale: 2,
+            borderRadius: "30%",
+            backgroundColor: "#3498db",
+            duration: 1.5,
+          })
+          .to("#animated-circle", {
+            scale: 2.5,
+            rotation: 180,
+            borderRadius: "15%",
+            backgroundColor: "#2ecc71",
+            duration: 1.5,
+          })
+          .to("#animated-circle", {
+            rotation: 360,
+            scale: 3,
+            backgroundColor: "#f39c12",
+            borderRadius: "5%",
+            duration: 1.5,
+          });
+
+        // スクロールガイドのフェードアウト
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 300) {
+            document.querySelector(".scroll-guide").style.opacity = "0.3";
+          } else {
+            document.querySelector(".scroll-guide").style.opacity = "1";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

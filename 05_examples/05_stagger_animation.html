@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAPスタッガー効果</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <style>
+      .box {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        background-color: #3498db;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+      }
+
+      .circle {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #e74c3c;
+        border-radius: 50%;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>複数要素のスタッガー効果</h1>
+      <p>GSAPのstaggerパラメータを使った時間差アニメーション</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="../index.html">ホーム</a></li>
+        <li><a href="../01_introduction/01_introduction.html">概要</a></li>
+        <li><a href="../02_benefits/02_benefits.html">メリット</a></li>
+        <li><a href="../03_good_animation/03_good_animation.html">良いアニメーション</a></li>
+        <li><a href="../04_basic_syntax/04_basic_syntax.html">基本構文と例</a></li>
+        <li><a href="../05_examples/01_button_hover.html">ボタンホバー</a></li>
+        <li><a href="../05_examples/02_timeline_sequence.html">タイムライン</a></li>
+        <li><a href="../05_examples/03_scroll_fade_in.html">スクロールフェード</a></li>
+        <li><a href="../05_examples/04_scroll_progress.html">スクロール連動</a></li>
+        <li><a href="../05_examples/05_stagger_animation.html">スタッガー</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      <div class="introduction">
+        <h2>スタッガー効果とは</h2>
+        <p>スタッガー（Stagger）効果とは、複数の要素に対して少しずつ時間をずらしてアニメーションを適用する技術です。これにより、視覚的なリズム感が生まれ、一度に全ての要素がアニメーションするよりも自然で洗練された印象を与えることができます。</p>
+        <p>GSAPでは、<code class="inline-code">stagger</code>パラメータを使うことで、簡単にこの効果を実装できます。以下のデモで様々なスタッガーパターンを試してみましょう。</p>
+      </div>
+
+      <!-- 基本的なスタッガー -->
+      <div class="demo-container">
+        <h2 class="demo-title">1. 基本的なスタッガー</h2>
+        <p class="demo-description">最もシンプルな使い方。各要素が0.1秒ずつ遅れて順番にフェードインします。</p>
+
+        <div class="items-row" id="basic-stagger">
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+        </div>
+
+        <div class="controls">
+          <button id="basic-stagger-btn">アニメーション再生</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code class="language-javascript">// 基本的なスタッガー効果
+gsap.to("#basic-stagger .item", {
+  opacity: 1,
+  duration: 0.5,
+  stagger: 0.1 // 0.1秒ずつ遅延
+});</code></pre>
+        </div>
+      </div>
+
+      <!-- グリッドスタッガー -->
+      <div class="demo-container">
+        <h2 class="demo-title">2. グリッドスタッガー</h2>
+        <p class="demo-description">グリッドレイアウトに対して、方向や順序を指定できます。</p>
+
+        <div class="grid" id="grid-stagger">
+          <div class="box">1</div>
+          <div class="box">2</div>
+          <div class="box">3</div>
+          <div class="box">4</div>
+          <div class="box">5</div>
+          <div class="box">6</div>
+          <div class="box">7</div>
+          <div class="box">8</div>
+          <div class="box">9</div>
+          <div class="box">10</div>
+          <div class="box">11</div>
+          <div class="box">12</div>
+          <div class="box">13</div>
+          <div class="box">14</div>
+          <div class="box">15</div>
+        </div>
+
+        <div class="controls">
+          <button id="grid-stagger-from-start">左上から</button>
+          <button id="grid-stagger-from-center">中央から</button>
+          <button id="grid-stagger-from-edges">外側から</button>
+          <button id="grid-stagger-random">ランダム</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code class="language-javascript">// 中央からのスタッガー例
+gsap.from("#grid-stagger .box", {
+  scale: 0,
+  opacity: 0,
+  duration: 0.5,
+  stagger: {
+    amount: 1, // 最初と最後の要素の間の合計時間
+    grid: [3, 5], // 行数と列数
+    from: "center", // 開始位置（"center", "start", "end", インデックス）
+    ease: "power1.out" // スタッガー自体のイージング
+  }
+});</code></pre>
+        </div>
+      </div>
+
+      <!-- リストアイテムのスタッガー -->
+      <div class="demo-container">
+        <h2 class="demo-title">3. リストアイテムのスタッガー</h2>
+        <p class="demo-description">一般的なリストやナビゲーションメニューに適用する例。</p>
+
+        <ul class="staggered-list" id="list-stagger">
+          <li>アイテム 1</li>
+          <li>アイテム 2</li>
+          <li>アイテム 3</li>
+          <li>アイテム 4</li>
+          <li>アイテム 5</li>
+        </ul>
+
+        <div class="controls">
+          <button id="list-stagger-btn">アニメーション再生</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code class="language-javascript">// 複数のプロパティを同時にアニメーション
+gsap.to("#list-stagger li", {
+  opacity: 1,
+  y: 0,
+  duration: 0.5,
+  stagger: 0.1,
+  ease: "back.out(1.7)"
+});</code></pre>
+        </div>
+      </div>
+
+      <!-- 円形配置のスタッガー -->
+      <div class="demo-container">
+        <h2 class="demo-title">4. 円形配置のスタッガー</h2>
+        <p class="demo-description">円周上に配置された要素を順番にアニメーションさせる高度な例。</p>
+
+        <div class="circle-container" id="circle-stagger">
+          <!-- JavaScriptで動的に追加されます -->
+        </div>
+
+        <div class="controls">
+          <button id="circle-stagger-btn">アニメーション再生</button>
+        </div>
+
+        <div class="code-block">
+          <pre><code class="language-javascript">// 円形に配置された要素のスタッガーアニメーション
+gsap.to("#circle-stagger .circle", {
+  opacity: 1,
+  scale: 1,
+  duration: 0.4,
+  stagger: {
+    amount: 1.5,
+    from: 0,
+    grid: "auto",
+    ease: "sine.inOut"
+  }
+});</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>GSAP勉強会サンプル - スタッガーアニメーションデモ</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+    <script src="../common.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 円形配置のサークルを動的に生成
+        const circleContainer = document.getElementById("circle-stagger");
+        const radius = 120;
+        const totalCircles = 20;
+
+        for (let i = 0; i < totalCircles; i++) {
+          const angle = (i / totalCircles) * Math.PI * 2;
+          const x = radius * Math.cos(angle);
+          const y = radius * Math.sin(angle);
+
+          const circle = document.createElement("div");
+          circle.className = "circle";
+          circle.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(0)`;
+          circleContainer.appendChild(circle);
+        }
+
+        // 1. 基本的なスタッガー
+        document.getElementById("basic-stagger-btn").addEventListener("click", () => {
+          // リセット（任意）
+          gsap.set("#basic-stagger .item", { opacity: 0 });
+
+          // アニメーション
+          gsap.to("#basic-stagger .item", {
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.1, // 0.1秒ずつ遅延
+          });
+        });
+
+        // 2. グリッドスタッガー
+        // 左上からのスタッガー
+        document.getElementById("grid-stagger-from-start").addEventListener("click", () => {
+          resetGridBoxes();
+
+          gsap.from("#grid-stagger .box", {
+            scale: 0,
+            opacity: 0,
+            duration: 0.5,
+            stagger: {
+              amount: 1,
+              grid: [3, 5],
+              from: "start",
+              ease: "power1.out",
+            },
+          });
+        });
+
+        // 中央からのスタッガー
+        document.getElementById("grid-stagger-from-center").addEventListener("click", () => {
+          resetGridBoxes();
+
+          gsap.from("#grid-stagger .box", {
+            scale: 0,
+            opacity: 0,
+            duration: 0.5,
+            stagger: {
+              amount: 1,
+              grid: [3, 5],
+              from: "center",
+              ease: "power1.out",
+            },
+          });
+        });
+
+        // 外側からのスタッガー
+        document.getElementById("grid-stagger-from-edges").addEventListener("click", () => {
+          resetGridBoxes();
+
+          gsap.from("#grid-stagger .box", {
+            scale: 0,
+            opacity: 0,
+            duration: 0.5,
+            stagger: {
+              amount: 1,
+              grid: [3, 5],
+              from: "edges",
+              ease: "power1.out",
+            },
+          });
+        });
+
+        // ランダムなスタッガー
+        document.getElementById("grid-stagger-random").addEventListener("click", () => {
+          resetGridBoxes();
+
+          gsap.from("#grid-stagger .box", {
+            scale: 0,
+            opacity: 0,
+            duration: 0.5,
+            stagger: {
+              amount: 1,
+              from: "random",
+              ease: "power1.out",
+            },
+          });
+        });
+
+        // 3. リストアイテムのスタッガー
+        document.getElementById("list-stagger-btn").addEventListener("click", () => {
+          // リセット
+          gsap.set("#list-stagger li", { opacity: 0, y: 20 });
+
+          // アニメーション
+          gsap.to("#list-stagger li", {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+          });
+        });
+
+        // 4. 円形配置のスタッガー
+        document.getElementById("circle-stagger-btn").addEventListener("click", () => {
+          // リセット
+          gsap.set("#circle-stagger .circle", { opacity: 0, scale: 0 });
+
+          // アニメーション
+          gsap.to("#circle-stagger .circle", {
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            stagger: {
+              amount: 1.5,
+              from: 0,
+              grid: "auto",
+              ease: "sine.inOut",
+            },
+          });
+        });
+
+        // グリッドボックスのリセット関数
+        function resetGridBoxes() {
+          gsap.set("#grid-stagger .box", {
+            scale: 1,
+            opacity: 1,
+          });
+        }
+
+        // 初期表示時のアニメーション（オプション）
+        gsap.to("#basic-stagger .item", {
+          opacity: 0,
+          duration: 0,
+        });
+
+        gsap.set("#list-stagger li", {
+          opacity: 0,
+          y: 20,
+        });
+
+        gsap.set("#circle-stagger .circle", {
+          opacity: 0,
+        });
+      });
+    </script>
+  </body>
+</html>
